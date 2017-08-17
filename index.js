@@ -3,7 +3,11 @@ const app = express();
 const db = require('./db.js');
 var cors = require('cors');
 app.use(cors());
-//var bodyParser = require('body-parser');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.get('/employees', function(req, res){
   db.getAllEmployees(function(rows){
@@ -27,22 +31,23 @@ app.get('/EmployeeByName', function(req, res){
 })
 
 app.post('/add-employees', function(req, res){
+  console.log(req.body);
   const empFName = req.body.fname;
   const empLName = req.body.lname;
-  const empHouseNo = req.body.houseNumber;
-  const empSName = req.body.streetname;
+  const empHouseNo = req.body.house_number;
+  const empSName = req.body.street;
   const empTown = req.body.town;
   const empPostcode = req.body.postcode;
   const nin = req.body.nin;
-  const bic = req.body.bank_acc_info_id;
-  const salary = req.body.start_salary;
-  const deptID = req.body.dept_id;
+  const bic = parseInt(req.body.bank_acc_info_id);
+  var salary = parseInt(req.body.start_salary);
+  var deptID = parseInt(req.body.dept_id);
+  console.log("employee accessed");
   
-  if(empFName && empLName && empHouseNo && empSName && empTown && empPostcode && nin && bic && salary && deptID){
     db.addEmployee(empFName,empLName, empHouseNo, empSName, empTown, empPostcode, nin, bic, salary, deptID, function(message){
                    res.send(message);
+      console.log("employee added");
     });
-  };
 });
 
 
