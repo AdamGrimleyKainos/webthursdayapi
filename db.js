@@ -44,8 +44,9 @@ exports.getEmployeesByDepartment = function(deptID, callback){
       if(err) throw err;
       callback(rows);
     }
-  )
+  );
 }
+
 
 exports.addEmployee = function(empFName,empLName, empHouseNo, empSName, empTown, empPostcode, nin, bic, salary, deptID, callback){
   db.query(
