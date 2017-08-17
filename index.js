@@ -19,6 +19,13 @@ app.get('/departments', function(req, res){
   })
 })
 
+app.get('/EmployeeByName', function(req, res){
+  db.getEmployeesByName(req.data.name, function(rows){
+    console.log('Employees sent for name ' + req.data.name);
+    res.send(rows);
+  })
+})
+
 app.post('/add-employees', function(req, res){
   const empFName = req.body.fname;
   const empLName = req.body.lname;

@@ -24,6 +24,18 @@ exports.getAllEmployees = function(callback){
   );
 }
 
+exports.getEmployeeByName = function(eName, callback){
+  db.query(
+    "SELECT * FROM employee WHERE fname = ?",
+    [eName],
+    function(err, rows){
+      if(err) throw err;
+      callback(rows);
+      console.log("Rows sent");
+    }
+  );
+}
+
 exports.getEmployeesByDepartment = function(deptID, callback){
   db.query(
     "SELECT * FROM employee WHERE dept_id = ?",
