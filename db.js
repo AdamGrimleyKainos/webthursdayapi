@@ -24,9 +24,20 @@ exports.getAllEmployees = function(callback){
   );
 }
 
-exports.addEmployee = function(empFName,empLName, empHouseNo, empSName, empTown, empPostcode, nin, bic, salary, callback){
+exports.getEmployeesByDepartment = function(deptID, callback){
   db.query(
-    "INSERT INTO employees(fname, lname, House_number, street_name, town, postcode, nin, bank_acc_info_id, startSalary) VALUES (?,?,?,?,?,?,?,?,?)",
+    "SELECT * FROM employee WHERE dept_id = ?",
+    [deptID],
+    function(err,rows){
+      if(err) throw err;
+      callback(rows);
+    }
+  )
+}
+
+exports.addEmployee = function(empFName,empLName, empHouseNo, empSName, empTown, empPostcode, nin, bic, salary, deptID, callback){
+  db.query(
+    "INSERT INTO employees(fname, lname, House_number, street_name, town, postcode, nin, bank_acc_info_id, startSalary, dept_id) VALUES (?,?,?,?,?,?,?,?,?)",
     [empFName],
     [empLName],
     [empHouseNo],
@@ -36,6 +47,7 @@ exports.addEmployee = function(empFName,empLName, empHouseNo, empSName, empTown,
     [nin],
     [bic],
     [salary],
+    [deptID],
     function(err, rows){
       if(err) throw err;
       callback(rows);
