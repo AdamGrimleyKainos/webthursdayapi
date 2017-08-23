@@ -20,6 +20,7 @@ app.get('/departments/:dept_id' , function(req, res){
   db.getEmployeesByDepartment(req.params.dept_id, function(rows){
     console.log('Employees sent for department ' + req.params.dept_id);
     res.send(rows);
+    //console.log(res);
   })
 })
 
